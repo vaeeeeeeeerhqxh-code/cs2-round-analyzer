@@ -42,7 +42,8 @@ shutil.copyfile(data.radar_path(map_name, version=ASSET_VERSION), out / "radar.p
 
 def export_round(item):
     start, end = item["freeze_end_tick"], item["end_tick"]
-    snapshots = demo.snapshots(seconds=1.0, start_tick=start, end_tick=end)
+    official_end = max(end, item["official_end_tick"] or end)
+    snapshots = demo.snapshots(seconds=1.0, start_tick=start, end_tick=official_end - 1)
     if snapshots.is_empty():
         return None
 
@@ -92,8 +93,10 @@ def export_round(item):
     events.sort(key=lambda event: event["time"])
     replay = {
         "map": map_name, "round": int(item["round_num"]),
-        "duration": round((end - start) / tick_rate, 2),
-        "winner": item["winner_side"], "frames": frames, "events": events,
+        "duration": round((official_end - start) / tick_rate, 2),
+        "outcome_time": round((end - start) / tick_rate, 2),
+        "winner": item["winner_side"], "reason": item["reason_name"],
+        "frames": frames, "events": events,
     }
     filename = f"round_{item['round_num']}.json"
     (out / filename).write_text(json.dumps(replay, ensure_ascii=False), encoding="utf-8")

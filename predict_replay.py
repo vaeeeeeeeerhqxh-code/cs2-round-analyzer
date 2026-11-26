@@ -32,6 +32,29 @@ def predict_replay(replay, bundle):
     X = pd.get_dummies(pd.DataFrame(rows)[bundle["features"]], dummy_na=True, dtype=int)
     X = X.reindex(columns=bundle["columns"], fill_value=0)
     probabilities = bundle["model"].predict_proba(X)[:, 1]
+    outcome_time = replay.get("outcome_time", replay["duration"])
+    last_active_probability = float(probabilities[0])
     for frame, probability in zip(replay["frames"], probabilities):
-        frame["ct_probability"] = round(float(probability), 4)
+        if frame["time"] < outcome_time:
+            last_active_probability = float(probability)
+        # После исхода раунда прогноз больше не обновляем.
+        frame["ct_probability"] = round(last_active_probability, 4)
+
+    active = [frame for frame in replay["frames"] if frame["time"] < outcome_time]
+    measured_events = []
+    for event in replay["events"]:
+        before = next((frame for frame in reversed(active) if frame["time"] < event["time"]), None)
+        after = next((frame for frame in active if frame["time"] >= event["time"]), None)
+        if before is None or after is None or after["time"] - before["time"] > 2.1:
+            continue
+        delta_pp = round(100 * (after["ct_probability"] - before["ct_probability"]), 1)
+        event["delta_pp"] = delta_pp
+        event["after_time"] = after["time"]
+        measured_events.append(event)
+    biggest = max(measured_events, key=lambda event: abs(event["delta_pp"]), default=None)
+    replay["summary"] = {
+        "initial_ct_probability": active[0]["ct_probability"] if active else None,
+        "biggest_event": ({key: biggest[key] for key in ("time", "after_time", "text", "type", "delta_pp")}
+                          if biggest else None),
+    }
     return replay

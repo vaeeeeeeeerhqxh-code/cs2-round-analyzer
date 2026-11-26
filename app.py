@@ -28,6 +28,20 @@ st.markdown("""
 
 replay_folder = folder / "data" / "local_replays"
 index_file = replay_folder / "index.json"
+
+
+@st.cache_data(show_spinner="Считаем прогнозы по раундам...")
+def load_match(index_updated, model_updated):
+    index = json.loads(index_file.read_text(encoding="utf-8"))
+    bundle = joblib.load(folder / "replay_model.joblib")
+    replays = {}
+    for item in index["rounds"]:
+        replay = json.loads((replay_folder / item["file"]).read_text(encoding="utf-8"))
+        replays[item["round"]] = predict_replay(replay, bundle)
+        replays[item["round"]]["model_metrics"] = bundle["metrics"]
+    return index, replays
+
+
 replay_ready = (replay_folder / "radar.png").exists() and (
     index_file.exists() or (replay_folder / "replay.json").exists()
 )
@@ -35,17 +49,24 @@ if replay_ready:
     view = st.segmented_control("Раздел", ["Повтор матча", "Анализ модели"], default="Повтор матча")
     if view == "Повтор матча":
         if index_file.exists():
-            index = json.loads(index_file.read_text(encoding="utf-8"))
+            index, replays = load_match(index_file.stat().st_mtime_ns,
+                                        (folder / "replay_model.joblib").stat().st_mtime_ns)
             rounds = [item["round"] for item in index["rounds"]]
             chosen = st.selectbox(f"Раунд демки · доступно {len(rounds)}", rounds,
                                   index=rounds.index(index["default_round"]))
-            filename = next(item["file"] for item in index["rounds"] if item["round"] == chosen)
+            replay = replays[chosen]
+            with st.expander("Сводка всех раундов: стартовый прогноз и крупнейший сдвиг"):
+                st.dataframe(pd.DataFrame([{
+                    "Раунд": number,
+                    "Старт CT": f"{item['summary']['initial_ct_probability']:.0%}",
+                    "Событие рядом со сдвигом": (item['summary']['biggest_event'] or {}).get("text", "—"),
+                    "Сдвиг CT, п.п.": (item['summary']['biggest_event'] or {}).get("delta_pp"),
+                } for number, item in replays.items()]), hide_index=True)
         else:
-            filename = "replay.json"  # Старый формат с одним раундом.
-        replay = json.loads((replay_folder / filename).read_text(encoding="utf-8"))
-        replay_model = joblib.load(folder / "replay_model.joblib")
-        replay = predict_replay(replay, replay_model)
-        replay["model_metrics"] = replay_model["metrics"]
+            replay = json.loads((replay_folder / "replay.json").read_text(encoding="utf-8"))
+            replay_model = joblib.load(folder / "replay_model.joblib")
+            replay = predict_replay(replay, replay_model)
+            replay["model_metrics"] = replay_model["metrics"]
         radar = base64.b64encode((replay_folder / "radar.png").read_bytes()).decode("ascii")
         payload = json.dumps(replay, ensure_ascii=False).replace("<", "\\u003c")
         html = (folder / "replay_ui.html").read_text(encoding="utf-8")
