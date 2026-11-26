@@ -1,11 +1,14 @@
 """Первый интерфейс: реальные тестовые состояния и прогноз нашей модели."""
 
+import base64
+import json
 from pathlib import Path
 
 import altair as alt
 import joblib
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 
 
 folder = Path(__file__).resolve().parent
@@ -20,6 +23,19 @@ st.markdown("""
     .hero p {margin: 0; color: #aebcd0;}
 </style>
 """, unsafe_allow_html=True)
+
+replay_folder = folder / "data" / "local_replays"
+replay_ready = (replay_folder / "replay.json").exists() and (replay_folder / "radar.png").exists()
+if replay_ready:
+    view = st.segmented_control("Раздел", ["Повтор матча", "Анализ модели"], default="Повтор матча")
+    if view == "Повтор матча":
+        replay = json.loads((replay_folder / "replay.json").read_text(encoding="utf-8"))
+        radar = base64.b64encode((replay_folder / "radar.png").read_bytes()).decode("ascii")
+        payload = json.dumps(replay, ensure_ascii=False).replace("<", "\\u003c")
+        html = (folder / "replay_ui.html").read_text(encoding="utf-8")
+        html = html.replace("__REPLAY_JSON__", payload).replace("__RADAR_BASE64__", radar)
+        components.html(html, height=1050, scrolling=False)
+        st.stop()
 
 
 @st.cache_data

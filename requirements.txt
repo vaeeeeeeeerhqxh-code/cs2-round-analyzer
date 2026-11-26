@@ -5,3 +5,4 @@ matplotlib>=3.9,<4
 joblib>=1.4,<2
 streamlit>=1.67,<2
 altair>=5,<7
+awpy[plot]>=3,<4

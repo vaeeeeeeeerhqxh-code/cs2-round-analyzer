@@ -1,3 +1,6 @@
 .venv/
 __pycache__/
 *.pyc
+*.dem
+demos/
+data/local_replays/

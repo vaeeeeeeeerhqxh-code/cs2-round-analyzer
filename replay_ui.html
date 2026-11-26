@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
+:root{--bg:#090d16;--panel:#111827;--line:#273349;--muted:#8a9bb1;--text:#ecf3fc;--ct:#4cc7ff;--t:#ffc05b;--green:#65e3a4}
+*{box-sizing:border-box}body{margin:0;color:var(--text);font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at 40% -25%,#1d3351,transparent 55%),var(--bg)}
+.shell{padding:18px 20px;max-width:1510px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:14px}.brand{display:flex;gap:13px;align-items:center}.logo{width:43px;height:43px;border:1px solid #486381;border-radius:10px;background:linear-gradient(145deg,#162d45,#0e1623);display:grid;place-items:center;color:var(--ct);font-size:24px;font-weight:800;transform:skew(-6deg)}.eyebrow{font-size:10px;letter-spacing:.24em;color:var(--ct);font-weight:800}.brand h1{font:800 28px/1 'Barlow Condensed',Arial,sans-serif;letter-spacing:.055em;margin:2px 0}.tag{border:1px solid #3d536b;background:#142233;padding:7px 10px;border-radius:6px;color:#a9c1d9;font-size:10px;letter-spacing:.1em;font-weight:800;text-transform:uppercase}.live{color:var(--green);border-color:#2c6955;background:#10271f}.scorebar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;background:#101a29;border:1px solid var(--line);border-radius:12px;padding:12px 22px;margin-bottom:14px;gap:18px}.team{font:800 25px 'Barlow Condensed',Arial,sans-serif;letter-spacing:.05em}.team.ct{color:var(--ct)}.team.t{color:var(--t);text-align:right}.scoremid{text-align:center}.round{font-size:11px;letter-spacing:.16em;color:var(--muted);font-weight:800}.clock{font:800 34px/.95 'Barlow Condensed',Arial,sans-serif;color:white}.layout{display:grid;grid-template-columns:minmax(0,1fr) 315px;gap:14px}.card{background:linear-gradient(145deg,#101a29,#0d1420);border:1px solid var(--line);border-radius:12px;overflow:hidden}.cardhead{height:42px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.cardhead span:last-child{color:var(--muted);font-size:10px}.mapwrap{position:relative;background:#0c151e;aspect-ratio:1.45/1;max-height:610px;min-height:450px;overflow:hidden}.mapgrid{position:absolute;inset:0;background:linear-gradient(#91b3d00d 1px,transparent 1px),linear-gradient(90deg,#91b3d00d 1px,transparent 1px);background-size:36px 36px;z-index:1;pointer-events:none}.radar{display:block;height:100%;width:100%;object-fit:contain;filter:contrast(1.12) brightness(.74) saturate(.72)}.stage{position:absolute;inset:0;z-index:2}.player{position:absolute;transform:translate(-50%,-50%);border-radius:50%;width:20px;height:20px;display:grid;place-items:center;font:800 10px Inter,Arial,sans-serif;color:#06121d;border:2px solid #effaff;box-shadow:0 0 0 5px #ffffff22,0 0 22px currentColor;transition:left .15s linear,top .15s linear}.player.ct{background:var(--ct);box-shadow:0 0 0 5px #4cc7ff32,0 0 18px #4cc7ff}.player.t{background:var(--t);box-shadow:0 0 0 5px #ffc05b32,0 0 18px #ffc05b}.player.dead{opacity:.27;filter:grayscale(1);box-shadow:none}.player .name{position:absolute;top:23px;left:50%;transform:translateX(-50%);white-space:nowrap;background:#08111bd9;border:1px solid #405067;color:#e7f2ff;border-radius:4px;padding:3px 5px;font:700 9px Inter,Arial,sans-serif}.player .bomb{position:absolute;top:-13px;right:-13px;color:var(--t);font-size:12px}.maplabel{position:absolute;z-index:3;left:13px;bottom:12px;background:#08111bdc;border:1px solid #3b4c65;border-radius:5px;padding:6px 8px;font-size:10px;letter-spacing:.1em;font-weight:800;color:#b7c9dc}.controls{padding:14px 17px 16px}.timeline{position:relative;height:16px;display:flex;align-items:center}.track{width:100%;height:7px;appearance:none;background:#26354c;border-radius:8px;cursor:pointer;outline:none}.track::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:white;border:4px solid var(--ct);box-shadow:0 0 15px #4cc7ff99}.markers{position:absolute;inset:0 8px;pointer-events:none}.marker{position:absolute;top:0;height:16px;width:3px;border-radius:2px;background:var(--t)}.marker.kill{background:#f57f75}.actions{display:flex;align-items:center;gap:9px;margin-top:12px}.button{font:800 12px Inter,Arial,sans-serif;background:#1b2b40;border:1px solid #38516d;color:white;border-radius:6px;padding:8px 12px;cursor:pointer}.button.primary{background:var(--ct);color:#06141f;border-color:var(--ct);min-width:91px}.button:hover{filter:brightness(1.2)}.speed{margin-left:auto;display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px}.speed select{background:#1b2b40;border:1px solid #38516d;color:white;border-radius:5px;padding:6px}.sidebar{display:flex;flex-direction:column;gap:14px}.statrow{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}.stat{padding:13px 15px}.stat:first-child{border-right:1px solid var(--line)}.stat small{display:block;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.1em}.stat strong{font:800 25px 'Barlow Condensed',Arial,sans-serif}.stat strong.ct{color:var(--ct)}.stat strong.t{color:var(--t)}.roster{padding:8px 12px 12px}.rosterline{display:grid;grid-template-columns:11px 1fr 35px;gap:8px;align-items:center;padding:8px 4px;border-bottom:1px solid #223044;font-size:11px}.rosterline:last-child{border:0}.dot{width:8px;height:8px;border-radius:50%}.dot.ct{background:var(--ct)}.dot.t{background:var(--t)}.rosterline .hp{text-align:right;color:#adc1d8;font-weight:800}.rosterline.dead{opacity:.4}.feed{padding:7px 12px;max-height:190px;overflow:auto}.event{border-bottom:1px solid #223044;padding:8px 2px;font-size:11px;line-height:1.35;display:flex;gap:8px}.event:last-child{border:0}.event time{color:var(--muted);font-weight:800;white-space:nowrap}.event.kill .eventtext{color:#f6b1a9}.event.finish_plant .eventtext{color:var(--t)}.empty{padding:14px;color:var(--muted);font-size:11px}.footer{margin-top:12px;color:#7590ab;font-size:10px;line-height:1.4}.result{color:var(--green);font-weight:800}.headerdots{display:flex;gap:5px}.headerdots i{display:block;width:4px;height:4px;border-radius:50%;background:#668baa}@media(max-width:900px){.layout{grid-template-columns:1fr}.mapwrap{min-height:350px}.sidebar{display:grid;grid-template-columns:1fr 1fr}.sidebar .card:first-child{grid-row:span 2}}@media(max-width:600px){.shell{padding:10px}.tag{display:none}.scorebar{padding:10px}.team{font-size:19px}.mapwrap{min-height:270px}.sidebar{display:flex}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top"><div class="brand"><div class="logo">⌖</div><div><div class="eyebrow">TACTICAL REPLAY SYSTEM</div><h1>ROUNDSCOPE<span style="color:var(--ct)">.</span></h1></div></div><div style="display:flex;gap:8px"><span class="tag live">● REAL DEMO DATA</span><span class="tag">LOCAL REPLAY</span></div></div>
+  <div class="scorebar"><div class="team ct">COUNTER-TERRORISTS <span id="ctAlive">5</span></div><div class="scoremid"><div class="round" id="roundLabel">ROUND</div><div class="clock" id="clock">0:00</div></div><div class="team t"><span id="tAlive">5</span> TERRORISTS</div></div>
+  <div class="layout"><div class="card"><div class="cardhead"><span>ТАКТИЧЕСКАЯ КАРТА · <span id="mapName"></span></span><span>РЕАЛЬНЫЕ ПОЗИЦИИ · 1 КАДР/С</span></div><div class="mapwrap" id="mapWrap"><img class="radar" src="data:image/png;base64,__RADAR_BASE64__"><div class="mapgrid"></div><div class="stage" id="stage"></div><div class="maplabel" id="mapBadge">MIRAGE</div></div><div class="controls"><div class="timeline"><input id="seek" class="track" type="range" min="0" max="100" value="0" step="0.1"><div id="markers" class="markers"></div></div><div class="actions"><button id="play" class="button primary">▶ ИГРАТЬ</button><button id="back" class="button">↶ 5 СЕК</button><button id="next" class="button">5 СЕК ↷</button><span id="timeReadout" style="font-size:11px;color:var(--muted);font-weight:800">0:00 / 0:00</span><div class="speed">СКОРОСТЬ <select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select></div></div></div></div>
+  <div class="sidebar"><div class="card"><div class="cardhead"><span>СОСТОЯНИЕ РАУНДА</span><span>LIVE</span></div><div class="statrow"><div class="stat"><small>CT В ИГРЕ</small><strong id="ctCount" class="ct">5</strong></div><div class="stat"><small>T В ИГРЕ</small><strong id="tCount" class="t">5</strong></div></div><div class="statrow"><div class="stat"><small>ЗДОРОВЬЕ CT</small><strong id="ctHp">500</strong></div><div class="stat"><small>ЗДОРОВЬЕ T</small><strong id="tHp">500</strong></div></div><div class="cardhead"><span>ИГРОКИ</span><span id="bombState">БОМБА У T</span></div><div id="roster" class="roster"></div></div><div class="card"><div class="cardhead"><span>ЛЕНТА СОБЫТИЙ</span><span class="headerdots"><i></i><i></i><i></i></span></div><div id="feed" class="feed"></div></div></div></div>
+  <div class="footer">Источник: локальная демка CS2 · Позиции и события извлечены Awpy. <span id="winner" class="result"></span> Оценка победы модели для этой демки появится после сопоставления её признаков с обучающим набором.</div>
+</div>
+<script>
+const replay=__REPLAY_JSON__;
+const $=id=>document.getElementById(id);
+const duration=replay.duration;
+let t=0,playing=false,last=0;
+const fmt=s=>{let n=Math.floor(Math.max(0,s));return Math.floor(n/60)+':'+String(n%60).padStart(2,'0')};
+const safe=v=>String(v??'');
+$('mapName').textContent=replay.map.replace('de_','').toUpperCase();
+$('mapBadge').textContent=replay.map.replace('de_','').toUpperCase();
+$('roundLabel').textContent='ROUND '+replay.round;
+$('seek').max=duration;
+for(const e of replay.events){const m=document.createElement('span');m.className='marker '+e.type;m.style.left=(e.time/duration*100)+'%';m.title=fmt(e.time)+' · '+e.text;$('markers').appendChild(m)}
+function draw(){
+  t=Math.min(duration,Math.max(0,t));$('seek').value=t;
+  $('clock').textContent=fmt(duration-t);$('timeReadout').textContent=fmt(t)+' / '+fmt(duration);
+  const f=replay.frames[Math.min(replay.frames.length-1,Math.max(0,Math.floor(t)))];
+  if(!f)return;
+  const next=replay.frames[Math.min(replay.frames.length-1,Math.max(0,Math.floor(t)+1))];
+  const nextById=new Map(next.players.map(p=>[p.id,p]));
+  const players=f.players;
+  const ct=players.filter(p=>p.side==='CT'&&p.hp>0),ts=players.filter(p=>p.side==='T'&&p.hp>0);
+  $('ctAlive').textContent=ct.length;$('tAlive').textContent=ts.length;$('ctCount').textContent=ct.length;$('tCount').textContent=ts.length;
+  $('ctHp').textContent=ct.reduce((a,p)=>a+p.hp,0);$('tHp').textContent=ts.reduce((a,p)=>a+p.hp,0);
+  const planted=replay.events.some(e=>e.type==='finish_plant'&&e.time<=t);$('bombState').textContent=planted?'БОМБА УСТАНОВЛЕНА':'БОМБА У T';
+  const stage=$('stage');stage.replaceChildren();
+  const rect=$('mapWrap').getBoundingClientRect();const mapSize=Math.min(rect.width,rect.height);const xpad=(rect.width-mapSize)/2,ypad=(rect.height-mapSize)/2;
+  const alpha=t-Math.floor(t);
+  for(const [i,p] of players.entries()){
+    const n=nextById.get(p.id);const x=p.x+(n&&p.hp>0&&n.hp>0?(n.x-p.x)*alpha:0),y=p.y+(n&&p.hp>0&&n.hp>0?(n.y-p.y)*alpha:0);
+    const el=document.createElement('div');el.className='player '+(p.side==='CT'?'ct':'t')+(p.hp<=0?' dead':'');
+    el.style.left=(xpad+x/1024*mapSize)+'px';el.style.top=(ypad+y/1024*mapSize)+'px';el.textContent=String(i+1);
+    el.title=safe(p.name)+' · '+p.side+' · '+p.hp+' HP';
+    const nm=document.createElement('span');nm.className='name';nm.textContent=safe(p.name);el.appendChild(nm);
+    if(p.bomb&&!planted){const b=document.createElement('span');b.className='bomb';b.textContent='◆';el.appendChild(b)}
+    stage.appendChild(el);
+  }
+  const roster=$('roster');roster.replaceChildren();for(const p of [...players].sort((a,b)=>a.side.localeCompare(b.side))){
+    const line=document.createElement('div');line.className='rosterline'+(p.hp<=0?' dead':'');
+    const dot=document.createElement('i');dot.className='dot '+(p.side==='CT'?'ct':'t');line.appendChild(dot);
+    const name=document.createElement('span');name.textContent=safe(p.name);line.appendChild(name);
+    const hp=document.createElement('span');hp.className='hp';hp.textContent=p.hp+' HP';line.appendChild(hp);roster.appendChild(line);
+  }
+  const feed=$('feed');feed.replaceChildren();const past=replay.events.filter(e=>e.time<=t).slice(-6).reverse();
+  if(!past.length){const empty=document.createElement('div');empty.className='empty';empty.textContent='Начало раунда. Нажми «Играть» или перемести таймлайн.';feed.appendChild(empty)}
+  for(const e of past){const line=document.createElement('div');line.className='event '+e.type;const tm=document.createElement('time');tm.textContent=fmt(e.time);const txt=document.createElement('span');txt.className='eventtext';txt.textContent=e.text;line.append(tm,txt);feed.appendChild(line)}
+  $('winner').textContent=t>=duration-0.2?'Победитель: '+(replay.winner==='counter-terrorist'?'CT':replay.winner==='terrorist'?'T':replay.winner)+'.':'';
+}
+function loop(now){if(playing){t+=(now-last)/1000*Number($('speed').value);if(t>=duration){t=duration;playing=false;$('play').textContent='▶ СНАЧАЛА'}draw()}last=now;requestAnimationFrame(loop)}
+$('play').onclick=()=>{if(t>=duration)t=0;playing=!playing;$('play').textContent=playing?'Ⅱ ПАУЗА':'▶ ИГРАТЬ';draw()};
+$('back').onclick=()=>{t-=5;draw()};$('next').onclick=()=>{t+=5;draw()};$('seek').oninput=e=>{t=Number(e.target.value);draw()};window.onresize=draw;draw();requestAnimationFrame(loop);
+</script>
+</body></html>
