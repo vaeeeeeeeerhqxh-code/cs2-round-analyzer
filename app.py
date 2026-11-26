@@ -27,11 +27,22 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 replay_folder = folder / "data" / "local_replays"
-replay_ready = (replay_folder / "replay.json").exists() and (replay_folder / "radar.png").exists()
+index_file = replay_folder / "index.json"
+replay_ready = (replay_folder / "radar.png").exists() and (
+    index_file.exists() or (replay_folder / "replay.json").exists()
+)
 if replay_ready:
     view = st.segmented_control("Раздел", ["Повтор матча", "Анализ модели"], default="Повтор матча")
     if view == "Повтор матча":
-        replay = json.loads((replay_folder / "replay.json").read_text(encoding="utf-8"))
+        if index_file.exists():
+            index = json.loads(index_file.read_text(encoding="utf-8"))
+            rounds = [item["round"] for item in index["rounds"]]
+            chosen = st.selectbox(f"Раунд демки · доступно {len(rounds)}", rounds,
+                                  index=rounds.index(index["default_round"]))
+            filename = next(item["file"] for item in index["rounds"] if item["round"] == chosen)
+        else:
+            filename = "replay.json"  # Старый формат с одним раундом.
+        replay = json.loads((replay_folder / filename).read_text(encoding="utf-8"))
         replay_model = joblib.load(folder / "replay_model.joblib")
         replay = predict_replay(replay, replay_model)
         replay["model_metrics"] = replay_model["metrics"]
