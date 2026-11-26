@@ -1,0 +1,38 @@
+{
+  "asset": "cs2-round-states.parquet",
+  "name": "tabular",
+  "schema_version": 1,
+  "sha256": "167d8a7e7df54c291f352cb82ebe416b5701213586899135eae66bfc61816cd4",
+  "snapshot_key": [
+    "demo_sha256",
+    "tick"
+  ],
+  "split": {
+    "test": {
+      "demos": 12,
+      "rows": 1096
+    },
+    "test_demo_sha256": [
+      "00862a3a0dd59dd679afec498e4d25041cd67a8fe2778acc93d49b344b0851c4",
+      "17accc02fe6ec2727063ba225593cab0efbf096033bb84e1f81c77173317eff7",
+      "1e2c11a4525fd870a7102e076d85983b02b2fef0736c960be9427254239b89ba",
+      "1e9db408158363e47fca7f4b95e4b8c0ec0d5f1f0393002a3333652c8e82b7f4",
+      "4eb13982bb4b15c66b8742904cc141ba58a200e4f9646978cad3c66bb3b4aa9f",
+      "4fa5376e74670211ac6b80258ae9c6b5b17c22cf33aca7e00ae695e3960e9c23",
+      "5885a5b9539d5b8aa9d8a81f875095b5a7fee8bc7e9b0bb896bbceb08744fb7e",
+      "aefe5e4470f9892b01aa3d74c692c9b00d9c4ab78b66cda2da3f8fe09657b24e",
+      "be62b3c441af588ee6b675818f24f24575731e411289f42ed16fd813f57c2f4c",
+      "c7663d943bb1d8d070230d2a67b87ade018923635cc73117a4bfa772e1888cc0",
+      "d3ab64e58f54c2ef395ae140a0fd5aa9665a3add240e628de562d111aeb30cbe",
+      "f5781e8d6550f1e989dd41dbc1f1ccfee86fa1c6b73ccb22f75b67b547a30ca9"
+    ],
+    "test_snapshot_keys_sha256": "4ac93dadcce7b0c59c4bab6f32d53ec445dbbeb52db8c004930f2e1233d15685",
+    "train": {
+      "demos": 259,
+      "rows": 22328
+    }
+  },
+  "tag": "data/tabular/v1.0.0",
+  "target": "round_end_reason",
+  "version": "1.0.0"
+}
