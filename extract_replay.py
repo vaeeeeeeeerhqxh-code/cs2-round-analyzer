@@ -72,6 +72,14 @@ for tick, players in snapshots.group_by("tick", maintain_order=True):
             "hp": int(player["health"] or 0),
             "armor": int(player["armor"] or 0),
             "bomb": bool(player["has_bomb"]),
+            "helmet": bool(player["has_helmet"]),
+            "defuse_kit": bool(player["has_defuser"]),
+            "defusing": bool(player["is_defusing"]),
+            "equipment_value": int(player["equipment_value"] or 0),
+            "fire_grenades": int(player["fire_grenades"] or 0),
+            "smoke_grenades": int(player["smoke_grenades"] or 0),
+            "he_grenades": int(player["he_grenades"] or 0),
+            "flashbangs": int(player["flashbangs"] or 0),
         })
     frames.append({"time": round((tick - start) / tick_rate, 2), "players": entries})
 
@@ -89,6 +97,7 @@ for action in bomb.filter(pl.col("tick").is_between(start, end)).iter_rows(named
         events.append({
             "time": round((action["tick"] - start) / tick_rate, 2),
             "type": action["event"],
+            "site": action["bombsite"] if action["event"] == "finish_plant" else None,
             "text": text,
         })
 events.sort(key=lambda item: item["time"])

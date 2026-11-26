@@ -10,6 +10,8 @@ import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
 
+from predict_replay import predict_replay
+
 
 folder = Path(__file__).resolve().parent
 st.set_page_config(page_title="CS2 Round Analyzer", page_icon="🎯", layout="wide")
@@ -30,6 +32,9 @@ if replay_ready:
     view = st.segmented_control("Раздел", ["Повтор матча", "Анализ модели"], default="Повтор матча")
     if view == "Повтор матча":
         replay = json.loads((replay_folder / "replay.json").read_text(encoding="utf-8"))
+        replay_model = joblib.load(folder / "replay_model.joblib")
+        replay = predict_replay(replay, replay_model)
+        replay["model_metrics"] = replay_model["metrics"]
         radar = base64.b64encode((replay_folder / "radar.png").read_bytes()).decode("ascii")
         payload = json.dumps(replay, ensure_ascii=False).replace("<", "\\u003c")
         html = (folder / "replay_ui.html").read_text(encoding="utf-8")
